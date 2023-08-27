@@ -1,0 +1,62 @@
+[
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\drawable-v21_bg_color.xml.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\drawable-v21\\bg_color.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\drawable_bg_color.xml.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\drawable\\bg_color.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-xhdpi_splashmain.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-xhdpi\\splashmain.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\drawable-v21_launch_background.xml.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\drawable-v21\\launch_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-hdpi_splashmain.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-hdpi\\splashmain.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\drawable_launch_background.xml.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\drawable\\launch_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-xxxhdpi_splashmain.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-xxxhdpi\\splashmain.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-xxhdpi_splashmain.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-xxhdpi\\splashmain.png"
+    },
+    {
+        "merged": "com.example.tumundomedico_flutter.app-merged_res-11:/drawable-v21_launch_background.xml.flat",
+        "source": "com.example.tumundomedico_flutter.app-main-5:/drawable-v21/launch_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-merged_res-11:\\mipmap-mdpi_splashmain.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\daemon\\7.5\\com.example.tumundomedico_flutter.app-main-5:\\mipmap-mdpi\\splashmain.png"
+    }
+]
