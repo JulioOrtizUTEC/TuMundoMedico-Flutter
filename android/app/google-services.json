@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1055045672131",
+    "project_id": "tumundomedico-flutter",
+    "storage_bucket": "tumundomedico-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055045672131:android:251f3c9f44fa3b99895676",
+        "android_client_info": {
+          "package_name": "com.example.tumundomedico_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055045672131-9krb4ulsakvu1ggmi1eoppivdq9nbdff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBREF3K9xHHej3ch1pE7FMthzHlowEDHmI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055045672131-9krb4ulsakvu1ggmi1eoppivdq9nbdff.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1055045672131-f7j1qnndpd7kcirm056phbqvu7uh1rg2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tumundomedicoFlutter.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() => runApp(MyApp());
+  void main() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    runApp(MyApp());
+  }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
