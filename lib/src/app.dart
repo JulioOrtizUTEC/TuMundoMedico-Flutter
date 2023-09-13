@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
+import 'package:tumundomedico_flutter/src/conexion.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -10,6 +11,30 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  // Se llama la conexion de BD
+  var db = MySQL();
+  String user = '';
+  String password = '';
+
+  //Funciones
+
+  void IniciarSesion(){
+
+    print(user);
+    print(password);
+
+    db.getConnection().then((conn){
+      String sql = "select usuario,contrasenia from Usuarios where usuario = '"+user+"' and contrasenia = '"+password+"';";
+      conn.query(sql).then((results){
+        print(results);
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> AcercaDeClass()));
+      });
+    });
+
+  }
+
+  //Codigo visual
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +111,9 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
+                  onSubmitted: (valor){
+                    user = valor;
+                  },
                 ),
               ),
               //Espacio entre el usuario y la contraseña
@@ -110,11 +138,14 @@ class _LoginState extends State<Login> {
                       minWidth: 50,
                       maxHeight: 50,
                     ),
-                    hintText: 'Ingrese su Usuario',
+                    hintText: 'Ingrese su Contraseña',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
+                  onSubmitted: (valor){
+                    password = valor;
+                  },
                 ),
               ),
               //Espacio entre la contraseña y el link de recuperar contraseña
@@ -146,9 +177,7 @@ class _LoginState extends State<Login> {
                   elevation: 20.0,
                   shadowColor: Colors.black,
                   child: TextButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AcercaDeClass()));
-                    },
+                    onPressed: () => IniciarSesion(),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                           Color.fromARGB(255, 12, 91, 115)),
