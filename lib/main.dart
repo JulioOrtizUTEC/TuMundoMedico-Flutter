@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
+import 'package:tumundomedico_flutter/src/inicio.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +25,18 @@ class AcercaDeClass extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: 'Acerca De',
       home: AcercaDe(),
+      );
+  }
+}
+  class InicioClass extends StatelessWidget{
+  const InicioClass({super.key});
+
+  @override
+  Widget build(BuildContext context){
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Inicio',
+      home: Inicio(),
       );
   }
 }
