@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
+import 'package:tumundomedico_flutter/src/medicos.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +25,16 @@ class AcercaDeClass extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: 'Acerca De',
       home: AcercaDe(),
+      );
+  }
+}
+
+class MedicosClass extends StatelessWidget{
+  Widget build(BuildContext context){
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Médicos',
+      home: Medicos(),
       );
   }
 }
