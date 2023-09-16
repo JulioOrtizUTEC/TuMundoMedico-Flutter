@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
-import 'package:tumundomedico_flutter/src/inicio.dart';
+import 'package:tumundomedico_flutter/src/medicos.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -28,15 +29,12 @@ class AcercaDeClass extends StatelessWidget{
       );
   }
 }
-  class InicioClass extends StatelessWidget{
-  const InicioClass({super.key});
 
-  @override
+class MedicosClass extends StatelessWidget{
   Widget build(BuildContext context){
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Inicio',
-      home: Inicio(),
-      );
+      title: 'Médicos',
+      home: Medicos(),
   }
 }
