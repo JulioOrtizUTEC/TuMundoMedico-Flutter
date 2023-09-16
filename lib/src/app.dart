@@ -51,6 +51,8 @@ class _LoginState extends State<Login> {
               ),
             ],
           ),
+
+
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -191,6 +193,10 @@ class _LoginState extends State<Login> {
               ),
             ],
           )
+       
+          //Termina el column
+
+          
         ],
       ),
     );
