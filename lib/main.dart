@@ -3,6 +3,7 @@ import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
 import 'package:tumundomedico_flutter/src/medicos.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -35,6 +36,5 @@ class MedicosClass extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: 'Médicos',
       home: Medicos(),
-      );
   }
 }

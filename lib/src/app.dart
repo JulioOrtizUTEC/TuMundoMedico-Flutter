@@ -147,7 +147,7 @@ class _LoginState extends State<Login> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AcercaDeClass()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> InicioClass()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
