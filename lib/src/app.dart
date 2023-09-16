@@ -118,20 +118,28 @@ class _LoginState extends State<Login> {
                 ),
               ),
               //Espacio entre la contraseña y el link de recuperar contraseña
-              SizedBox(
+              const SizedBox(
                 height: 21,
               ),
               SizedBox(
-                child: Text(
-                  '¿Olvidaste tu contraseña?',
-                  style: const TextStyle(
-                    fontFamily: "Lato",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xff0cae90),
-                    height: 23 / 12,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RecuContraVerificarClass()));
+                  },
+                  child: const Text(
+                    '¿Olvidaste tu contraseña?',
+                    style: TextStyle(
+                      fontFamily: "Lato",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xff0cae90),
+                      height: 23 / 12,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
               //Espacio entre el link de recuperar contraseña y los botones
@@ -147,7 +155,10 @@ class _LoginState extends State<Login> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AcercaDeClass()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AcercaDeClass()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
