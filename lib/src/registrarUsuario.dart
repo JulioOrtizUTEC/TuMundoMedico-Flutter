@@ -23,7 +23,7 @@ class _RegistroUsuState extends State<RegistroUsu> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Expanded(
+                  Container(
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: TextButton(
@@ -44,17 +44,36 @@ class _RegistroUsuState extends State<RegistroUsu> {
                   const Expanded(
                     child: Column(
                       children: [
-                        Align(
-                          alignment: Alignment.centerRight,
-                          //Acá se colocan los textos de bienvenida
-                          child: Text('¡Animate!',
-                              style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 24,
-                                  color: Color.fromARGB(255, 3, 2, 67),
+                        SizedBox(
+                          width: 900,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            //Acá se colocan los textos de bienvenida
+                            child: Text('¡Animate!',
+                                style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 24,
+                                    color: Color.fromARGB(255, 3, 2, 67),
+                                    fontWeight: FontWeight.w700,
+                                    height: 27 / 22),
+                                textAlign: TextAlign.right),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 900,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            //Acá se colocan los textos de bienvenida
+                            child: Text("Descubre tu mundo médico",
+                                style: TextStyle(
+                                  fontFamily: "Inter",
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w700,
-                                  height: 27 / 22),
-                              textAlign: TextAlign.left),
+                                  color: Color(0xff030243),
+                                  height: 27 / 14,
+                                ),
+                                textAlign: TextAlign.right),
+                          ),
                         ),
                       ],
                     ),
@@ -191,7 +210,10 @@ class _RegistroUsuState extends State<RegistroUsu> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const Login()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Login()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),
