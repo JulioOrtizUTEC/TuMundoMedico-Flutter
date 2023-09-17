@@ -54,7 +54,7 @@ class _InicioState extends State<Inicio> {
                     enableInteractiveSelection: false,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: const Color.fromARGB(255, 255, 235, 235),
+                      fillColor: const Color.fromARGB(255, 255, 255, 255),
                       prefixIcon: const Icon(Icons.search),
                       prefixIconConstraints: const BoxConstraints(
                         minWidth: 50,
