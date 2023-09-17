@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
+import 'package:tumundomedico_flutter/src/inicio.dart';
 import 'package:tumundomedico_flutter/src/registrarUsuario.dart';
 
 class Login extends StatefulWidget {
@@ -151,7 +152,7 @@ class _LoginState extends State<Login> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> InicioClass()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Inicio()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
