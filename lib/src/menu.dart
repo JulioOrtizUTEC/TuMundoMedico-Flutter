@@ -51,7 +51,6 @@ class _MenuState extends State<Menu> {
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
             ),
-            
           ),
         ],
         /*iconTheme: const IconThemeData(
