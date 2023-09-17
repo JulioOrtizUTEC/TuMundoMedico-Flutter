@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
+import 'package:tumundomedico_flutter/src/perfil.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -147,7 +148,7 @@ class _LoginState extends State<Login> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AcercaDeClass()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> PerfilClass()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
