@@ -38,13 +38,26 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: 
-      AppBar(
-        backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
-        iconTheme: const IconThemeData(
-          color: Colors.black,
+        actions: [
+          Builder(
+            builder: (context) => Align(
+              alignment: Alignment.centerLeft,
+              child:IconButton(
+              icon: const Icon(Icons.menu, color: Colors.black, size: 50),
+              padding: const EdgeInsets.fromLTRB(0, 10, 380, 0),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+            ),
+            
           ),
+        ],
+        /*iconTheme: const IconThemeData(
+          color: Colors.black,
+          size: 50,
+          ),*/
       ),
       drawer: Drawer(
         backgroundColor: const Color.fromARGB(255, 10, 118, 98),
