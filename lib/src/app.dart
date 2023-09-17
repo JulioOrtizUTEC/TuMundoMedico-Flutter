@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
+import 'package:tumundomedico_flutter/src/registrarUsuario.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +18,9 @@ class _LoginState extends State<Login> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 51.0),
         children: <Widget>[
+          const SizedBox(
+            height: 50.0,
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -78,7 +82,7 @@ class _LoginState extends State<Login> {
                     fillColor: Color.fromARGB(255, 235, 235, 235),
                     prefixIcon: Icon(Icons.account_circle_sharp),
                     prefixIconConstraints: BoxConstraints(
-                      minWidth: 50,
+                      minWidth: 70,
                       maxHeight: 50,
                     ),
                     hintText: 'Ingrese su Usuario',
@@ -107,7 +111,7 @@ class _LoginState extends State<Login> {
                     fillColor: Color.fromARGB(255, 235, 235, 235),
                     prefixIcon: Icon(Icons.lock),
                     prefixIconConstraints: BoxConstraints(
-                      minWidth: 50,
+                      minWidth: 70,
                       maxHeight: 50,
                     ),
                     hintText: 'Ingrese su Usuario',
@@ -175,7 +179,9 @@ class _LoginState extends State<Login> {
                   elevation: 20.0,
                   shadowColor: Colors.black,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> RegistroUsu()));
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),
                     ),

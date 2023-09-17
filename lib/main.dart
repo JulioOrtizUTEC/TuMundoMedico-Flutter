@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
 import 'package:tumundomedico_flutter/src/medicos.dart';
-
+import 'package:tumundomedico_flutter/src/recuperaContra.dart';
+import 'package:tumundomedico_flutter/src/recuperaContraVerificar.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,5 +37,23 @@ class MedicosClass extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: 'Médicos',
       home: Medicos(),
+
+class RecuContraVerificarClass extends StatelessWidget{
+  Widget build(BuildContext context){
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Recuperar Contraseña',
+      home: RecuContraVerificar(),
+      );
+  }
+}
+
+class RecuContraClass extends StatelessWidget{
+  Widget build(BuildContext context){
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Recuperar Contraseña',
+      home: RecuContra(),
+      );
   }
 }
