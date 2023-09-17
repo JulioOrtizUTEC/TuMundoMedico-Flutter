@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
+import 'package:tumundomedico_flutter/src/recuperaContra.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
@@ -316,7 +318,7 @@ class _PerfilState extends State<Perfil> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Login()));
+                              builder: (context) => RecuContraClass()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
