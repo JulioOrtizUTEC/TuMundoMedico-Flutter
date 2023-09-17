@@ -39,9 +39,6 @@ class _PerfilState extends State<Perfil> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 40.0),
         children: <Widget>[
-          const SizedBox(
-            height: 50.0,
-          ),
           const Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -154,7 +151,6 @@ class _PerfilState extends State<Perfil> {
                           //Textfield de nombre
                           TextField(
                         enableInteractiveSelection: false,
-                        obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(255, 235, 235, 235),
@@ -180,7 +176,6 @@ class _PerfilState extends State<Perfil> {
                           //Textfield de usuario
                           TextField(
                         enableInteractiveSelection: false,
-                        obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(255, 235, 235, 235),
@@ -212,7 +207,6 @@ class _PerfilState extends State<Perfil> {
                       //Textfield de usuario
                       TextField(
                     enableInteractiveSelection: false,
-                    obscureText: true,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: const Color.fromARGB(255, 235, 235, 235),
@@ -285,7 +279,6 @@ class _PerfilState extends State<Perfil> {
                           //Textfield de usuario
                           TextField(
                         enableInteractiveSelection: false,
-                        obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(255, 235, 235, 235),

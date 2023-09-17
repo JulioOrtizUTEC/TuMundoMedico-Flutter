@@ -115,7 +115,6 @@ class _RecuContraVerificarState extends State<RecuContraVerificar> {
                       //Textfield de usuario
                       TextField(
                     enableInteractiveSelection: false,
-                    obscureText: true,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: const Color.fromARGB(255, 235, 235, 235),
