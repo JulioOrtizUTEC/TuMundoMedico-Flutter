@@ -14,6 +14,7 @@ class _AcercaDeState extends State<AcercaDe> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 40.0),
         children: <Widget>[
