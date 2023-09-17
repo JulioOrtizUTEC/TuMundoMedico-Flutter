@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
 import 'package:tumundomedico_flutter/src/medicos.dart';
+import 'package:tumundomedico_flutter/src/menu.dart';
 import 'package:tumundomedico_flutter/src/perfil.dart';
 import 'package:tumundomedico_flutter/src/recuperaContra.dart';
 import 'package:tumundomedico_flutter/src/recuperaContraVerificar.dart';
@@ -38,6 +39,9 @@ class MedicosClass extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: 'Médicos',
       home: Medicos(),
+    );
+  }
+}
 
 class RecuContraVerificarClass extends StatelessWidget{
   Widget build(BuildContext context){
@@ -65,6 +69,15 @@ class PerfilClass extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: 'Perfil',
       home: Perfil(),
+      );
+  }
+}
+
+class MenuClass extends StatelessWidget{
+  Widget build(BuildContext context){
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Menu(),
       );
   }
 }

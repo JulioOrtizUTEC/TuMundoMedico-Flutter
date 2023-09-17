@@ -2,6 +2,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
+import 'package:tumundomedico_flutter/src/inicio.dart';
+import 'package:tumundomedico_flutter/src/menu.dart';
 
 class AcercaDe extends StatefulWidget {
   const AcercaDe({super.key});
@@ -27,7 +29,7 @@ class _AcercaDeState extends State<AcercaDe> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Login()));
+                              builder: (context) => const Menu()));
                     },
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,

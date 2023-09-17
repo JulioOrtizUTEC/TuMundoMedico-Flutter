@@ -16,7 +16,7 @@ class _Medicos extends State<Medicos> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 51.0),
         children: <Widget>[
-          Column(
+          const Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Align(
@@ -48,7 +48,6 @@ class _Medicos extends State<Medicos> {
                     //Textfield de busqueda
                     TextField(
                   enableInteractiveSelection: false,
-                  obscureText: true,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(255, 235, 235, 235),
@@ -108,7 +107,7 @@ class _Medicos extends State<Medicos> {
                         // Middle: Cuatro líneas de texto centradas
                         Expanded(
                           child: Container(
-                            margin: EdgeInsets.only(top: 8), // Margen superior para centrar el contenido del medio
+                            margin: EdgeInsets.only(top: 5), // Margen superior para centrar el contenido del medio
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -170,7 +169,7 @@ class _Medicos extends State<Medicos> {
                 ),
               ),
               // Space
-              SizedBox(height: 21),
+              SizedBox(height: 25),
             ],
           ),
 
@@ -212,7 +211,7 @@ class _Medicos extends State<Medicos> {
                         // Middle: Cuatro líneas de texto centradas
                         Expanded(
                           child: Container(
-                            margin: EdgeInsets.only(top: 8), // Margen superior para centrar el contenido del medio
+                            margin: EdgeInsets.only(top: 5), // Margen superior para centrar el contenido del medio
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,

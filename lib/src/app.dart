@@ -127,16 +127,22 @@ class _LoginState extends State<Login> {
                 height: 21,
               ),
               SizedBox(
-                child: Text(
-                  '¿Olvidaste tu contraseña?',
-                  style: const TextStyle(
-                    fontFamily: "Lato",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xff0cae90),
-                    height: 23 / 12,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => RecuContraVerificarClass()));
+                  },
+                  child: const Text(
+                    '¿Olvidaste tu contraseña?',
+                    style: const TextStyle(
+                      fontFamily: "Lato",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xff0cae90),
+                      height: 23 / 12,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
               //Espacio entre el link de recuperar contraseña y los botones
@@ -152,7 +158,8 @@ class _LoginState extends State<Login> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Inicio()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MenuClass()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
@@ -181,7 +188,10 @@ class _LoginState extends State<Login> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> RegistroUsu()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegistroUsu()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),
