@@ -42,7 +42,9 @@ class _MenuState extends State<Menu> {
       AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+          ),
       ),
       drawer: Drawer(
         backgroundColor: const Color.fromARGB(255, 10, 118, 98),
