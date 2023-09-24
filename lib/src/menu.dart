@@ -47,7 +47,7 @@ class _MenuState extends State<Menu> {
               alignment: Alignment.centerLeft,
               child:IconButton(
               icon: const Icon(Icons.menu, color: Colors.black, size: 50),
-              padding: const EdgeInsets.fromLTRB(0, 10, 380, 0),
+              padding: const EdgeInsets.fromLTRB(0, 10, 350, 0),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
             ),

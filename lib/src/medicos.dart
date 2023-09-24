@@ -74,7 +74,7 @@ class _Medicos extends State<Medicos> {
             children: [
               // Shadow for the Card
               Container(
-                height: 75, //Alto de la Card
+                height: 100, //Alto de la Card
                 decoration: BoxDecoration(
                    color: Color(0xFFEBEBEB),
                    borderRadius: BorderRadius.circular(25.0),
@@ -178,7 +178,7 @@ class _Medicos extends State<Medicos> {
             children: [
               // Shadow for the Card
               Container(
-                height: 75, //Alto de la Card
+                height: 100, //Alto de la Card
                 decoration: BoxDecoration(
                    color: Color(0xFFEBEBEB),
                    borderRadius: BorderRadius.circular(25.0),
@@ -273,7 +273,7 @@ class _Medicos extends State<Medicos> {
                 ),
               ),
               // Space
-              SizedBox(height: 21),
+              SizedBox(height: 16),
             ],
           ),
 
