@@ -5,6 +5,8 @@ import 'package:tumundomedico_flutter/src/acercade.dart';
 import 'package:tumundomedico_flutter/src/inicio.dart';
 import 'package:tumundomedico_flutter/src/medicos.dart';
 import 'package:tumundomedico_flutter/src/perfil.dart';
+import 'globals.dart' as globals;
+
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -77,15 +79,15 @@ class _MenuState extends State<Menu> {
             const SizedBox(
               height: 25.0,
             ),
-            const Column(
+            Column(
               children: [
                 SizedBox(
                   width: 900,
                   child: Align(
                     alignment: Alignment.center,
                     //Acá se colocan los textos de bienvenida
-                    child: Text('Usuario',
-                        style: TextStyle(
+                    child: Text('${globals.user}',
+                        style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 24,
                             color: Color.fromARGB(255, 255, 255, 255),
@@ -203,6 +205,8 @@ class _MenuState extends State<Menu> {
                     shadowColor: Colors.black,
                     child: TextButton(
                       onPressed: () {
+                        globals.idUser = "";
+                        globals.user = "";
                         Navigator.push(
                             context,
                             MaterialPageRoute(

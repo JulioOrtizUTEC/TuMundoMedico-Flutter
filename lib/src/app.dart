@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/acercade.dart';
 import 'package:tumundomedico_flutter/src/inicio.dart';
 import 'package:tumundomedico_flutter/src/registrarUsuario.dart';
+import 'package:http/http.dart';
+import 'globals.dart' as globals;
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -11,7 +16,47 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
+
+TextEditingController usuarioController = TextEditingController();
+TextEditingController contraseniaController = TextEditingController();
+var logueado = 0;
+var id = "";
+var usr = "";
+
 class _LoginState extends State<Login> {
+  
+login(String usuario, String contrasenia) async{
+  try{
+    Response response = await post(
+      Uri.parse("http://localhost/TuMundoMedicoService/login.php"),
+      body: {
+        'username': usuario,
+        'pass': contrasenia 
+      }
+    );
+
+    //Se hace una validación para saber si es una respuesta correcta
+    if(response.statusCode == 200){
+        // Se obtiene la respuesta json de la API
+        final Map<String,dynamic> respuesta = await jsonDecode(response.body);
+        id = respuesta["id_usuario"];
+        usr = respuesta["usuario"];
+        // Se verifica que los usuarios sean distintos de vacio
+        if(id != "" && usr != ""){
+          //Se guarda el id de usuario y el usuario en variables globales
+          globals.idUser = id;
+          globals.user = usr;
+          //se pasa a enviar al usuario a la pantalla de inicio
+          Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MenuClass()));
+        }
+      }else{
+        print("El usuario no existe");
+      }
+  }catch(e){
+    print(e.toString());
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +121,10 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(25.0),
                 child:
                     //Textfield de usuario
-                    TextField(
-                  enableInteractiveSelection: false,
-                  decoration: InputDecoration(
+                    TextFormField(
+                    controller: usuarioController,
+                    enableInteractiveSelection: false,
+                    decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(255, 235, 235, 235),
                     prefixIcon: Icon(Icons.account_circle_sharp),
@@ -104,10 +150,11 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(25.0),
                 child:
                     //Textfield de usuario
-                    TextField(
-                  enableInteractiveSelection: false,
-                  obscureText: true,
-                  decoration: InputDecoration(
+                    TextFormField(
+                    controller: contraseniaController,
+                    enableInteractiveSelection: false,
+                    obscureText: true,
+                    decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(255, 235, 235, 235),
                     prefixIcon: Icon(Icons.lock),
@@ -115,7 +162,7 @@ class _LoginState extends State<Login> {
                       minWidth: 70,
                       maxHeight: 50,
                     ),
-                    hintText: 'Ingrese su Usuario',
+                    hintText: 'Ingrese su Contraseña',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
@@ -158,8 +205,7 @@ class _LoginState extends State<Login> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MenuClass()));
+                      login(usuarioController.text.toString(), contraseniaController.text.toString());
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
