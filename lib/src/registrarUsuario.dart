@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
+import 'package:http/http.dart';
 
 class RegistroUsu extends StatefulWidget {
   const RegistroUsu({super.key});
@@ -8,7 +11,45 @@ class RegistroUsu extends StatefulWidget {
   State<RegistroUsu> createState() => _RegistroUsuState();
 }
 
+TextEditingController usuarioController = TextEditingController();
+TextEditingController contraseniaController = TextEditingController();
+TextEditingController confirmarContraseniaController = TextEditingController();
+
 class _RegistroUsuState extends State<RegistroUsu> {
+
+registro(String usuario, String contrasenia) async{
+  try{
+      Response response = await post(
+        Uri.parse("http://localhost/TuMundoMedicoService/usuarios.php"),
+        body: {
+          'usu': usuario,
+          'pass': contrasenia 
+        }
+      );
+
+    //Se hace una validación para saber si es una respuesta correcta
+    if(response.statusCode == 200){
+        // Se obtiene la respuesta, pero esta vez al recibir solo un string, se almacena en una variable.
+        var respuesta = await jsonDecode(response.body);
+        // Se verifica que la respuesta sea distinta de vacio
+        if(respuesta != ""){
+          usuarioController.clear();
+          contraseniaController.clear();
+          confirmarContraseniaController.clear();
+          //se pasa a enviar al usuario a la pantalla de Login para iniciar sesión
+          Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
+        }else{
+          print("Algo sucedio al crear el usuario, por favor vuelva a intentarlo");
+        }
+      }else{
+        print("El usuario no existe");
+      }
+  }catch(e){
+    print(e.toString());
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,10 +152,10 @@ class _RegistroUsuState extends State<RegistroUsu> {
                   borderRadius: BorderRadius.circular(25.0),
                   child:
                       //Textfield de usuario
-                      TextField(
-                    enableInteractiveSelection: false,
-                    obscureText: true,
-                    decoration: InputDecoration(
+                      TextFormField(
+                        controller: usuarioController,
+                        enableInteractiveSelection: false,
+                        decoration: InputDecoration(
                       filled: true,
                       fillColor: Color.fromARGB(255, 235, 235, 235),
                       prefixIcon: Icon(Icons.account_circle_sharp),
@@ -143,10 +184,11 @@ class _RegistroUsuState extends State<RegistroUsu> {
                   borderRadius: BorderRadius.circular(25.0),
                   child:
                       //Textfield de usuario
-                      TextField(
-                    enableInteractiveSelection: false,
-                    obscureText: true,
-                    decoration: InputDecoration(
+                      TextFormField(
+                        controller: contraseniaController,
+                      enableInteractiveSelection: false,
+                      obscureText: true,
+                      decoration: InputDecoration(
                       filled: true,
                       fillColor: Color.fromARGB(255, 235, 235, 235),
                       prefixIcon: Icon(Icons.lock),
@@ -174,10 +216,11 @@ class _RegistroUsuState extends State<RegistroUsu> {
                   borderRadius: BorderRadius.circular(25.0),
                   child:
                       //Textfield de usuario
-                      TextField(
-                    enableInteractiveSelection: false,
-                    obscureText: true,
-                    decoration: InputDecoration(
+                      TextFormField(
+                      controller: confirmarContraseniaController,
+                      enableInteractiveSelection: false,
+                      obscureText: true,
+                      decoration: InputDecoration(
                       filled: true,
                       fillColor: Color.fromARGB(255, 235, 235, 235),
                       prefixIcon: Icon(Icons.lock),
@@ -210,10 +253,12 @@ class _RegistroUsuState extends State<RegistroUsu> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Login()));
+                      if(contraseniaController.text.toString() == confirmarContraseniaController.text.toString()){
+                        registro(usuarioController.text.toString(), contraseniaController.text.toString());
+
+                      }else{
+                        print("Las contraseñas no coinciden, por favor verifique que sean iguales");
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),

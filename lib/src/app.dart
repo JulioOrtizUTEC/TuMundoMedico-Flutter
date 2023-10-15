@@ -19,6 +19,7 @@ class Login extends StatefulWidget {
 
 TextEditingController usuarioController = TextEditingController();
 TextEditingController contraseniaController = TextEditingController();
+
 var logueado = 0;
 var id = "";
 var usr = "";
@@ -46,6 +47,9 @@ login(String usuario, String contrasenia) async{
           //Se guarda el id de usuario y el usuario en variables globales
           globals.idUser = id;
           globals.user = usr;
+          //Se limpian los TextFormField
+          usuarioController.clear();
+          contraseniaController.clear();
           //se pasa a enviar al usuario a la pantalla de inicio
           Navigator.push(context,
                           MaterialPageRoute(builder: (context) => MenuClass()));
