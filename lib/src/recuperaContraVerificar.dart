@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
+import 'package:tumundomedico_flutter/src/recuperaContra.dart';
+import 'package:http/http.dart';
+import 'globals.dart' as globals;
+
 
 class RecuContraVerificar extends StatefulWidget {
   const RecuContraVerificar({super.key});
@@ -9,7 +15,41 @@ class RecuContraVerificar extends StatefulWidget {
   State<RecuContraVerificar> createState() => _RecuContraVerificarState();
 }
 
+TextEditingController usuarioController = TextEditingController();
+
 class _RecuContraVerificarState extends State<RecuContraVerificar> {
+
+verificar(String usuario) async{
+  try{
+
+    var url = Uri.http("localhost", "/TuMundoMedicoService/usuarios.php", {"username":usuario});
+    Response response = await get(url);
+
+    //Se hace una validación para saber si es una respuesta correcta
+    if(response.statusCode == 200){
+        // Se obtiene la respuesta json de la API
+        final Map<String,dynamic> respuesta = await jsonDecode(response.body);
+        id = respuesta["id_usuario"];
+        // Se verifica que los usuarios sean distintos de vacio
+        if(id != ""){
+          //Se guarda el id de usuario y el usuario en variables globales
+          globals.idUser = id;
+          //Se limpian los TextFormField
+          usuarioController.clear();
+          //se pasa a enviar al usuario a la pantalla de inicio
+          Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => RecuContra()));
+        }else{
+          print("El usuario no existe");
+        }
+      }else{
+        print("El usuario no existe");
+      }
+  }catch(e){
+    print(e.toString());
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,9 +153,10 @@ class _RecuContraVerificarState extends State<RecuContraVerificar> {
                   borderRadius: BorderRadius.circular(25.0),
                   child:
                       //Textfield de usuario
-                      TextField(
-                    enableInteractiveSelection: false,
-                    decoration: InputDecoration(
+                      TextFormField(
+                      controller: usuarioController,
+                      enableInteractiveSelection: false,
+                      decoration: InputDecoration(
                       filled: true,
                       fillColor: const Color.fromARGB(255, 235, 235, 235),
                       prefixIcon: const Icon(Icons.account_circle_sharp),
@@ -147,10 +188,9 @@ class _RecuContraVerificarState extends State<RecuContraVerificar> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RecuContraClass()));
+                      if(usuarioController.text.toString() != ""){
+                        verificar(usuarioController.text.toString());
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),
