@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:tumundomedico_flutter/src/recuperaContraVerificar.dart';
+import 'package:http/http.dart';
+import 'globals.dart' as globals;
 
 class RecuContra extends StatefulWidget {
   const RecuContra({super.key});
@@ -10,7 +14,41 @@ class RecuContra extends StatefulWidget {
   State<RecuContra> createState() => _RecuContraState();
 }
 
+TextEditingController contraseniaController = TextEditingController();
+TextEditingController confirmarContraseniaController = TextEditingController();
+
 class _RecuContraState extends State<RecuContra> {
+
+actualizarContrasenia(String contrasenia) async{
+  try{
+
+    var url = Uri.http("localhost", "/TuMundoMedicoService/usuarios.php", {"id":globals.idUser,"contrasenia":contrasenia});
+    print(url);
+    Response response = await put(url);
+
+    //Se hace una validación para saber si es una respuesta correcta
+    if(response.statusCode == 200){
+        // Se obtiene la respuesta, pero esta vez al recibir solo un string, se almacena en una variable.
+        var respuesta = await jsonDecode(response.body);
+        // Se verifica que la respuesta sea distinta de vacio
+        if(respuesta == "Usuario actualizado correctamente"){
+          contraseniaController.clear();
+          confirmarContraseniaController.clear();
+          globals.idUser = "";
+          //se pasa a enviar al usuario a la pantalla de Login para iniciar sesión
+          Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
+        }else{
+          print("Algo sucedio al actualizar la contrasenia");
+        }
+      }else{
+        print("El usuario no existe");
+      }
+  }catch(e){
+    print(e.toString());
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,10 +155,11 @@ class _RecuContraState extends State<RecuContra> {
                   borderRadius: BorderRadius.circular(25.0),
                   child:
                       //Textfield de usuario
-                      TextField(
-                    enableInteractiveSelection: false,
-                    obscureText: true,
-                    decoration: InputDecoration(
+                      TextFormField(
+                      controller: contraseniaController,
+                      enableInteractiveSelection: false,
+                      obscureText: true,
+                      decoration: InputDecoration(
                       filled: true,
                       fillColor: Color.fromARGB(255, 235, 235, 235),
                       prefixIcon: Icon(Icons.lock),
@@ -148,10 +187,11 @@ class _RecuContraState extends State<RecuContra> {
                   borderRadius: BorderRadius.circular(25.0),
                   child:
                       //Textfield de usuario
-                      TextField(
-                    enableInteractiveSelection: false,
-                    obscureText: true,
-                    decoration: InputDecoration(
+                      TextFormField(
+                      controller: confirmarContraseniaController,
+                      enableInteractiveSelection: false,
+                      obscureText: true,
+                      decoration: InputDecoration(
                       filled: true,
                       fillColor: Color.fromARGB(255, 235, 235, 235),
                       prefixIcon: const Icon(Icons.lock),
@@ -183,10 +223,9 @@ class _RecuContraState extends State<RecuContra> {
                   shadowColor: Colors.black,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Login()));
+                      if(contraseniaController.text.toString() == confirmarContraseniaController.text.toString()){
+                        actualizarContrasenia(contraseniaController.text.toString());
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
