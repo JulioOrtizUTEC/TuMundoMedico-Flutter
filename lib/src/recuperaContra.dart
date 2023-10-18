@@ -23,7 +23,6 @@ actualizarContrasenia(String contrasenia) async{
   try{
 
     var url = Uri.http("localhost", "/TuMundoMedicoService/usuarios.php", {"id":globals.idUser,"contrasenia":contrasenia});
-    print(url);
     Response response = await put(url);
 
     //Se hace una validación para saber si es una respuesta correcta
