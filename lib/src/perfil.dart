@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/main.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
+import 'package:tumundomedico_flutter/src/menu.dart';
 import 'package:tumundomedico_flutter/src/recuperaContra.dart';
+import 'package:http/http.dart';
+import 'globals.dart' as globals;
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
@@ -10,7 +15,72 @@ class Perfil extends StatefulWidget {
   State<Perfil> createState() => _PerfilState();
 }
 
+TextEditingController nombresController = TextEditingController();
+TextEditingController apellidosController = TextEditingController();
+TextEditingController correoController = TextEditingController();
+var _imagePath = "";
+var _departamento = "";
+TextEditingController edadController = TextEditingController();
+
 class _PerfilState extends State<Perfil> {
+
+  void initState() {
+    super.initState();
+    pedirDatos();
+}
+
+pedirDatos() async{
+    try{
+      var url = Uri.http("localhost", "/TuMundoMedicoService/usuarios.php", {"username":globals.user});
+      Response response = await get(url);
+      //Se hace una validación para saber si es una respuesta correcta
+      if(response.statusCode == 200){
+          // Se obtiene la respuesta, pero esta vez al recibir solo un string, se almacena en una variable.
+          final Map<String,dynamic> respuesta = await jsonDecode(response.body);
+          nombresController.text = respuesta["nombres_usu"];
+          apellidosController.text = respuesta["apellidos_usu"];
+          correoController.text = respuesta["correo_usu"];
+          edadController.text = respuesta["edad_usu"];
+        }else{
+          print("El usuario no existe");
+        }
+
+
+    }catch(e){
+      print(e.toString());
+    } 
+}
+
+actualizarPerfil(String nombres, String apellidos, String correo, String departamento, String edad) async{
+  try{
+
+    var url = Uri.http("localhost", "/TuMundoMedicoService/usuarios.php", {"id":globals.idUser,"nombres_usu":nombres,"apellidos_usu":apellidos,"correo_usu":correo,"pais_departamento":departamento,"edad_usu":edad});
+    Response response = await put(url);
+
+    //Se hace una validación para saber si es una respuesta correcta
+    if(response.statusCode == 200){
+        // Se obtiene la respuesta, pero esta vez al recibir solo un string, se almacena en una variable.
+        var respuesta = await jsonDecode(response.body);
+        // Se verifica que la respuesta sea distinta de vacio
+        if(respuesta == "Usuario actualizado correctamente"){
+          nombresController.text = "";
+          apellidosController.text = "";
+          correoController.text = "";
+          edadController.text = "";
+          //se pasa a enviar al usuario a la pantalla de Login para iniciar sesión
+          Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Menu()));
+        }else{
+          print("Algo sucedio al actualizar la contrasenia");
+        }
+      }else{
+        print("El usuario no existe");
+      }
+  }catch(e){
+    print(e.toString());
+  }
+}
+
   // Initial Selected Value
   String dropdownvalue = 'Seleccione Departamento';
 
@@ -72,16 +142,25 @@ class _PerfilState extends State<Perfil> {
                 children: <Widget>[
                   Container(
                     width: 150,
-                    child: const Align(
+                    child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Nombre Usuario',
-                          style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 24,
-                              color: Color.fromARGB(255, 12, 91, 115),
-                              fontWeight: FontWeight.w700,
-                              height: 27 / 22),
-                          textAlign: TextAlign.center),
+                      child: 
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          top: 0,
+                          right: 0,
+                          bottom: 0,
+                        ),
+                        child: Text('${globals.user}',
+                            style: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 24,
+                                color: Color.fromARGB(255, 12, 91, 115),
+                                fontWeight: FontWeight.w700,
+                                height: 27 / 22),
+                            textAlign: TextAlign.center),
+                      ),
                     ),
                   ),
                   const Expanded(
@@ -141,7 +220,7 @@ class _PerfilState extends State<Perfil> {
                   ),
                   //El textbox para ingresar el nombre
                   SizedBox(
-                    width: 175.0,
+                    width: 160.0,
                     //Sombre para el Textfield de nombre
                     child: Material(
                       elevation: 20.0,
@@ -149,9 +228,10 @@ class _PerfilState extends State<Perfil> {
                       borderRadius: BorderRadius.circular(25.0),
                       child:
                           //Textfield de nombre
-                          TextField(
-                        enableInteractiveSelection: false,
-                        decoration: InputDecoration(
+                          TextFormField(
+                          controller: nombresController,
+                          enableInteractiveSelection: false,
+                          decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(255, 235, 235, 235),
                           hintText: 'Ingrese sus Nombres',
@@ -166,7 +246,7 @@ class _PerfilState extends State<Perfil> {
                     width: 15.0,
                   ),
                   SizedBox(
-                    width: 175.0,
+                    width: 160.0,
                     //Sombre para el Textfield de usuario
                     child: Material(
                       elevation: 20.0,
@@ -174,9 +254,10 @@ class _PerfilState extends State<Perfil> {
                       borderRadius: BorderRadius.circular(25.0),
                       child:
                           //Textfield de usuario
-                          TextField(
-                        enableInteractiveSelection: false,
-                        decoration: InputDecoration(
+                          TextFormField(
+                          controller: apellidosController,
+                          enableInteractiveSelection: false,
+                          decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(255, 235, 235, 235),
                           hintText: 'Ingrese sus Apellidos',
@@ -196,23 +277,32 @@ class _PerfilState extends State<Perfil> {
           ),
           Column(
             children: <Widget>[
-              SizedBox(
-                width: 360.0,
-                //Sombre para el Textfield de usuario
-                child: Material(
-                  elevation: 20.0,
-                  shadowColor: Colors.black,
-                  borderRadius: BorderRadius.circular(25.0),
-                  child:
-                      //Textfield de usuario
-                      TextField(
-                    enableInteractiveSelection: false,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color.fromARGB(255, 235, 235, 235),
-                      hintText: 'Ingrese su Correo Electronico',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                ),
+                child: SizedBox(
+                  width: 340.0,
+                  //Sombre para el Textfield de usuario
+                  child: Material(
+                    elevation: 20.0,
+                    shadowColor: Colors.black,
+                    borderRadius: BorderRadius.circular(25.0),
+                    child:
+                        //Textfield de usuario
+                        TextFormField(
+                        controller: correoController,
+                        enableInteractiveSelection: false,
+                        decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 235, 235, 235),
+                        hintText: 'Ingrese su Correo Electronico',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
                       ),
                     ),
                   ),
@@ -228,9 +318,9 @@ class _PerfilState extends State<Perfil> {
               Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                     child: SizedBox(
-                      width: 250.0,
+                      width: 243.0,
                       //Sombre para el Textfield de usuario
                       child: Material(
                         elevation: 20.0,
@@ -258,7 +348,8 @@ class _PerfilState extends State<Perfil> {
                           // change button value to selected value
                           onChanged: (String? newValue) {
                             setState(() {
-                              dropdownvalue = newValue!;
+                              _departamento = newValue!;
+                              print(_departamento);
                             });
                           },
                         ),
@@ -269,7 +360,7 @@ class _PerfilState extends State<Perfil> {
                     width: 10.0,
                   ),
                   SizedBox(
-                    width: 100.0,
+                    width: 80.0,
                     //Sombre para el Textfield de usuario
                     child: Material(
                       elevation: 20.0,
@@ -277,9 +368,10 @@ class _PerfilState extends State<Perfil> {
                       borderRadius: BorderRadius.circular(25.0),
                       child:
                           //Textfield de usuario
-                          TextField(
-                        enableInteractiveSelection: false,
-                        decoration: InputDecoration(
+                          TextFormField(
+                          controller: edadController,
+                          enableInteractiveSelection: false,
+                          decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(255, 235, 235, 235),
                           hintText: 'Edad',
@@ -296,6 +388,42 @@ class _PerfilState extends State<Perfil> {
           ),
           const SizedBox(
             height: 40.0,
+          ),
+          Column(
+            children: <Widget>[
+              //Boton de Registrarse
+              SizedBox(
+                height: 45,
+                width: 300,
+                child: Material(
+                  elevation: 20.0,
+                  shadowColor: Colors.black,
+                  child: TextButton(
+                    onPressed: () {
+                      if(nombresController.text.toString() != "" || apellidosController.text.toString() != "" || correoController.text.toString() != "" || _departamento != "" || edadController.text.toString() != ""){
+                        actualizarPerfil(nombresController.text.toString(), apellidosController.text.toString(), correoController.text.toString(), _departamento, edadController.text.toString());
+                      }else{
+                        print("Actualiza por lo menos 1 campo");
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 12, 91, 115)),
+                    ),
+                    child: const Text(
+                      'Actualizar Perfil',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20.0,
           ),
           Column(
             children: <Widget>[
