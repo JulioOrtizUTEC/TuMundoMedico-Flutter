@@ -15,8 +15,14 @@ class Menu extends StatefulWidget {
   State<Menu> createState() => _MenuState();
 }
 
+
+
 class _MenuState extends State<Menu> {
-  int _selectDrawerItem = 0;
+
+  void moveToOtherView(){
+    
+  }
+  int _selectDrawerItem = globals.opcion_menu;
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
