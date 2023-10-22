@@ -213,6 +213,7 @@ class _MenuState extends State<Menu> {
                       onPressed: () {
                         globals.idUser = "";
                         globals.user = "";
+                        globals.opcion_menu = 0;
                         Navigator.push(
                             context,
                             MaterialPageRoute(

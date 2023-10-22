@@ -145,7 +145,6 @@ Widget build(BuildContext context) {
 }
 
   void updateSearchResults(String query) {
-    print(query);
     if (query.isEmpty) {
       setState(() {
         filteredDoctors = [];
