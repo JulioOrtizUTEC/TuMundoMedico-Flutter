@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tumundomedico_flutter/src/app.dart';
 import 'package:http/http.dart' as http;
 import 'package:tumundomedico_flutter/src/listaMedicos.dart';
+import 'globals.dart' as globals;
 
 class Medicos extends StatefulWidget {
   const Medicos({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class Medicos extends StatefulWidget {
 }
 
 class _Medicos extends State<Medicos> {
-  late Future<List<listaMedicos>> doctors;
+  Future<List<listaMedicos>>? doctors;
   final TextEditingController searchController = TextEditingController();
   List<listaMedicos> filteredDoctors = [];
   List<listaMedicos> doctorList = []; // Define the doctorList at the class level
@@ -21,7 +22,13 @@ class _Medicos extends State<Medicos> {
   @override
   void initState() {
     super.initState();
+    if(globals.especialidad_seleccionada != ""){
+      searchController.text = globals.especialidad_seleccionada;
+      updateSearchResults(searchController.text.toString());
+      globals.especialidad_seleccionada = "";
+    }
     doctors = fetchDoctorData();
+
   }
 
   @override
@@ -138,6 +145,7 @@ Widget build(BuildContext context) {
 }
 
   void updateSearchResults(String query) {
+    print(query);
     if (query.isEmpty) {
       setState(() {
         filteredDoctors = [];

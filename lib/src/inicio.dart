@@ -1,16 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tumundomedico_flutter/src/listaEspecialidades.dart';
 import 'package:tumundomedico_flutter/src/medicos.dart';
 import 'package:tumundomedico_flutter/src/menu.dart';
+import 'package:tumundomedico_flutter/src/listaEspecialidades.dart';
+import 'package:http/http.dart' as http;
+import 'globals.dart' as globals;
 
 class Inicio extends StatefulWidget {
-  const Inicio({super.key});
+  const Inicio({Key? key}) : super(key: key);
 
   @override
   State<Inicio> createState() => _InicioState();
 }
 
 class _InicioState extends State<Inicio> {
+  Future<List<listaEspecialidades>>? especialidades;
+  final TextEditingController searchController = TextEditingController();
+  List<listaEspecialidades> filteredEspecialidades = [];
+  List<listaEspecialidades> EspecialidadesList =[]; // Define the doctorList at the class level
+
+  @override
+  void initState() {
+    super.initState();
+    especialidades = fetchEspecialidadesData();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }  
+
   Menu menu = new Menu();
   @override
   Widget build(BuildContext context) {
@@ -20,27 +43,27 @@ class _InicioState extends State<Inicio> {
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 51.0),
           children: <Widget>[
             //Row(
-              //children: [
-                //Column(children: [menu.Menu_Widget]),
-                const Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text('Especialidades',
-                          style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 24,
-                              color: Color(0xFF040243),
-                              fontWeight: FontWeight.w700,
-                              height: 27 / 22),
-                          textAlign: TextAlign.right),
-                    ),
-                    SizedBox(
-                      height: 50.0,
-                    ),
-                  ],
-                //),
+            //children: [
+            //Column(children: [menu.Menu_Widget]),
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text('Especialidades',
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 24,
+                          color: Color(0xFF040243),
+                          fontWeight: FontWeight.w700,
+                          height: 27 / 22),
+                      textAlign: TextAlign.right),
+                ),
+                SizedBox(
+                  height: 50.0,
+                ),
+              ],
+              //),
               //],
             ),
             Column(
@@ -50,7 +73,11 @@ class _InicioState extends State<Inicio> {
                   elevation: 20.0,
                   shadowColor: Colors.black,
                   borderRadius: BorderRadius.circular(25.0),
-                  child: TextField(
+                  child: TextFormField(
+                    controller: searchController,
+                    onChanged: (query) {
+                      updateSearchResults(query);
+                    },
                     enableInteractiveSelection: false,
                     decoration: InputDecoration(
                       filled: true,
@@ -71,162 +98,172 @@ class _InicioState extends State<Inicio> {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Material(
-                  color: Colors.white,
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(25.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: InkWell(
-                    splashColor: Colors.black26,
-                    onTap: () {
-                      
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Ink.image(
-                          image: const AssetImage('images/Medicinageneral.jpg'),
-                          height: 94,
-                          width: 144,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        const Text('Medicina General',
-                            style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 11,
-                                color: Color(0xFF000000),
-                                fontWeight: FontWeight.w700,
-                                height: 27 / 22),
-                            textAlign: TextAlign.center),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20.0,
-                ),
-                Material(
-                  color: Colors.white,
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(25.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: InkWell(
-                    splashColor: Colors.black26,
-                    onTap: () {
-                      
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Ink.image(
-                          image: const AssetImage('images/Urologia.jpg'),
-                          height: 94,
-                          width: 144,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        const Text('Urología',
-                            style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 11,
-                                color: Color(0xFF000000),
-                                fontWeight: FontWeight.w700,
-                                height: 27 / 22),
-                            textAlign: TextAlign.center),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Material(
-                  color: Colors.white,
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(25.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: InkWell(
-                    splashColor: Colors.black26,
-                    onTap: () {
+            // Doctors List
+            FutureBuilder<List<listaEspecialidades>>(
+              future: especialidades,
+              builder:
+                  (context, AsyncSnapshot<List<listaEspecialidades>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else {
+                  final data = snapshot.data;
+                  if (data != null) {
+                    // Update the doctorList variable
+                    EspecialidadesList = data;
 
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Ink.image(
-                          image: const AssetImage('images/Cirujanos.jpg'),
-                          height: 94,
-                          width: 144,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        const Text('Cirugía General',
-                            style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 11,
-                                color: Color(0xFF000000),
-                                fontWeight: FontWeight.w700,
-                                height: 27 / 22),
-                            textAlign: TextAlign.center),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20.0,
-                ),
-                Material(
-                  color: Colors.white,
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(25.0),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: InkWell(
-                    splashColor: Colors.black26,
-                    onTap: () {
-                      
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Ink.image(
-                          image: const AssetImage('images/Cardiologia.jpg'),
-                          height: 94,
-                          width: 144,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        const Text('Cardiología',
-                            style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 11,
-                                color: Color(0xFF000000),
-                                fontWeight: FontWeight.w700,
-                                height: 27 / 22),
-                            textAlign: TextAlign.center),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            )
+                    return Column(
+                      children: buildEspecialidadesWidgets(data),
+                    );
+                  } else {
+                    return Center(
+                      child: Text('No hay data disponible.'),
+                    );
+                  }
+                }
+              },
+            ),
           ],
         ));
+  }
+
+  List<Widget> buildEspecialidadesWidgets(
+      List<listaEspecialidades> EspecialidaList) {
+    if (filteredEspecialidades.isNotEmpty) {
+      // Muestra los resultados de la búsqueda si hay disponible
+      return filteredEspecialidades
+          .map((doctor) => buildEspecialidadWidget(doctor))
+          .toList();
+    } else {
+      // Muestra la lista entera, si no se búsca nada
+      return EspecialidaList.map((doctor) => buildEspecialidadWidget(doctor))
+          .toList();
+    }
+  }
+
+  void updateSearchResults(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        filteredEspecialidades = [];
+      });
+    } else {
+      final lowercaseQuery = query.toLowerCase();
+      final matchingEspecialidades = EspecialidadesList.where((especialidad) {
+        final lowercaseName = especialidad.nombre_Especialidad.toLowerCase();
+        return lowercaseName.contains(lowercaseQuery);
+      }).toList();
+
+      setState(() {
+        filteredEspecialidades = matchingEspecialidades;
+      });
+    }
+  }
+
+  Future<List<listaEspecialidades>> fetchEspecialidadesData() async {
+    final Uri url =
+        Uri.parse('http://localhost/TuMundoMedicoService/Especialidades.php');
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      if (data is List) {
+        return data.map((json) => listaEspecialidades.fromJson(json)).toList();
+      } else {
+        throw Exception('Invalid data format: $data');
+      }
+    } else {
+      throw Exception('Failed to load especialidades data');
+    }
+  }
+
+  Widget buildEspecialidadWidget(listaEspecialidades especiali) {
+    return Row(
+      children: [
+        Material(
+          color: Colors.white,
+          elevation: 8,
+          borderRadius: BorderRadius.circular(25.0),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: InkWell(
+            splashColor: Colors.black26,
+            onTap: () {
+              globals.especialidad_seleccionada = especiali.nombre_Especialidad;
+              globals.opcion_menu = 1;
+              Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Menu()));
+              
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.network(
+                  '${especiali.imagen}',
+                  height: 94,
+                  width: 144,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                Text('${especiali.nombre_Especialidad}',
+                    style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 11,
+                        color: Color(0xFF000000),
+                        fontWeight: FontWeight.w700,
+                        height: 27 / 22),
+                    textAlign: TextAlign.center),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 20.0,
+        ),
+        Material(
+          color: Colors.white,
+          elevation: 8,
+          borderRadius: BorderRadius.circular(25.0),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: InkWell(
+            splashColor: Colors.black26,
+            onTap: () {
+              globals.especialidad_seleccionada = especiali.nombre_Especialidad;
+              globals.opcion_menu = 1;
+              Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Menu()));
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.network(
+                  '${especiali.imagen}',
+                  height: 94,
+                  width: 144,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                Text('${especiali.nombre_Especialidad}',
+                    style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 11,
+                        color: Color(0xFF000000),
+                        fontWeight: FontWeight.w700,
+                        height: 27 / 22),
+                    textAlign: TextAlign.center),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
