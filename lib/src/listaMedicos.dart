@@ -1,5 +1,6 @@
 class listaMedicos {
   final String nombres;
+  final String apellidos;
   final String especialidad;
   final String direccion;
   final String tel;
@@ -7,6 +8,7 @@ class listaMedicos {
 
   listaMedicos({
     required this.nombres,
+    required this.apellidos,
     required this.especialidad,
     required this.direccion,
     required this.tel,
@@ -16,6 +18,7 @@ class listaMedicos {
   factory listaMedicos.fromJson(Map<String, dynamic> json) {
     return listaMedicos(
       nombres: json['nombres_medico'],
+      apellidos: json['apellidos_medico'],
       especialidad: json['nombre_especialidad'],
       direccion: json['direccion_medico'],
       tel: json['telefono_medico'],

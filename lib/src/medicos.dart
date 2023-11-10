@@ -218,7 +218,7 @@ Widget buildDoctorWidget(listaMedicos doctor) {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  'Dr. ${doctor.nombres}',
+                  'Dr. ${doctor.nombres} ${doctor.apellidos}',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 15,
