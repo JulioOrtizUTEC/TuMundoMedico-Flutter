@@ -37,132 +37,140 @@ class _InicioState extends State<Inicio> {
   Menu menu = new Menu();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color(0xFFFFFFFF),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 51.0),
+  return WillPopScope(
+    onWillPop: () async {
+      // Pop the current page before pushing the new one.
+      Navigator.pop(context);
+      return false;
+    },
+  child: Scaffold(
+    backgroundColor: const Color(0xFFFFFFFF),
+    body: ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 51.0),
+      children: <Widget>[
+        const Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            //Row(
-            //children: [
-            //Column(children: [menu.Menu_Widget]),
-            const Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text('Especialidades',
-                      style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 24,
-                          color: Color(0xFF040243),
-                          fontWeight: FontWeight.w700,
-                          height: 27 / 22),
-                      textAlign: TextAlign.right),
-                ),
-                SizedBox(
-                  height: 50.0,
-                ),
-              ],
-              //),
-              //],
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text('Especialidades',
+                  style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 24,
+                      color: Color(0xFF040243),
+                      fontWeight: FontWeight.w700,
+                      height: 27 / 22),
+                  textAlign: TextAlign.right),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Material(
-                  elevation: 20.0,
-                  shadowColor: Colors.black,
-                  borderRadius: BorderRadius.circular(25.0),
-                  child: TextFormField(
-                    controller: searchController,
-                    onChanged: (query) {
-                      updateSearchResults(query);
-                    },
-                    enableInteractiveSelection: false,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color.fromARGB(255, 255, 255, 255),
-                      prefixIcon: const Icon(Icons.search),
-                      prefixIconConstraints: const BoxConstraints(
-                        minWidth: 50,
-                        minHeight: 50,
-                      ),
-                      hintText: 'Buscar especialidad',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0)),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 54,
-                ),
-              ],
-            ),
-            // Doctors List
-            FutureBuilder<List<listaEspecialidades>>(
-              future: especialidades,
-              builder:
-                  (context, AsyncSnapshot<List<listaEspecialidades>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                } else {
-                  final data = snapshot.data;
-                  if (data != null) {
-                    // Update the doctorList variable
-                    EspecialidadesList = data;
-
-                    return Column(
-                      children: buildEspecialidadesWidgets(data),
-                    );
-                  } else {
-                    return Center(
-                      child: Text('No hay data disponible.'),
-                    );
-                  }
-                }
-              },
+            SizedBox(
+              height: 50.0,
             ),
           ],
-        ));
-  }
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Material(
+              elevation: 20.0,
+              shadowColor: Colors.black,
+              borderRadius: BorderRadius.circular(25.0),
+              child: TextFormField(
+                controller: searchController,
+                onChanged: (query) {
+                  updateSearchResults(query);
+                },
+                enableInteractiveSelection: false,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  prefixIcon: const Icon(Icons.search),
+                  prefixIconConstraints: const BoxConstraints(
+                    minWidth: 50,
+                    minHeight: 50,
+                  ),
+                  hintText: 'Buscar especialidad',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0)),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 54,
+            ),
+          ],
+        ),
+        // Doctors List
+        FutureBuilder<List<listaEspecialidades>>(
+          future: especialidades,
+          builder:
+              (context, AsyncSnapshot<List<listaEspecialidades>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            } else {
+              final data = snapshot.data;
+              if (data != null) {
+                // Update the doctorList variable
+                EspecialidadesList = data;
 
-  List<Widget> buildEspecialidadesWidgets(
-      List<listaEspecialidades> EspecialidaList) {
-    if (filteredEspecialidades.isNotEmpty) {
-      // Muestra los resultados de la búsqueda si hay disponible
-      return filteredEspecialidades
-          .map((doctor) => buildEspecialidadWidget(doctor))
-          .toList();
-    } else {
-      // Muestra la lista entera, si no se búsca nada
-      return EspecialidaList.map((doctor) => buildEspecialidadWidget(doctor))
-          .toList();
-    }
-  }
+                return buildEspecialidadesWidgets(data);
+              } else {
+                return Center(
+                  child: Text('No hay data disponible.'),
+                );
+              }
+            }
+          },
+        ),
+      ],
+    ),
+  ),
+  );
+}
+
+Widget buildEspecialidadesWidgets(List<listaEspecialidades> EspecialidaList) {
+  final List<listaEspecialidades> displayList =
+      filteredEspecialidades.isNotEmpty ? filteredEspecialidades : EspecialidaList;
+
+  return GridView.builder(
+    shrinkWrap: true,
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2, // Fijar el no. de columnas
+      crossAxisSpacing: 20.0,
+      mainAxisSpacing: 20.0,
+    ),
+    itemCount: displayList.length,
+    itemBuilder: (context, index) {
+      final especialidad = displayList[index];
+      return buildEspecialidadWidget(especialidad);
+    },
+  );
+}
+
 
   void updateSearchResults(String query) {
-    if (query.isEmpty) {
-      setState(() {
-        filteredEspecialidades = [];
-      });
-    } else {
-      final lowercaseQuery = query.toLowerCase();
-      final matchingEspecialidades = EspecialidadesList.where((especialidad) {
-        final lowercaseName = especialidad.nombre_Especialidad.toLowerCase();
-        return lowercaseName.contains(lowercaseQuery);
-      }).toList();
+  if (query.isEmpty) {
+    setState(() {
+      filteredEspecialidades = [];
+    });
+  } else {
+    final lowercaseQuery = query.toLowerCase();
+    final matchingEspecialidades = EspecialidadesList.where((especialidad) {
+      final lowercaseName = especialidad.nombre_Especialidad.toLowerCase();
+      return lowercaseName.contains(lowercaseQuery);
+    }).toList();
 
-      setState(() {
-        filteredEspecialidades = matchingEspecialidades;
-      });
-    }
+    setState(() {
+      filteredEspecialidades = matchingEspecialidades;
+    });
   }
+}
+
 
   Future<List<listaEspecialidades>> fetchEspecialidadesData() async {
     final Uri url =
@@ -182,88 +190,46 @@ class _InicioState extends State<Inicio> {
     }
   }
 
-  Widget buildEspecialidadWidget(listaEspecialidades especiali) {
-    return Row(
-      children: [
-        Material(
-          color: Colors.white,
-          elevation: 8,
-          borderRadius: BorderRadius.circular(25.0),
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: InkWell(
-            splashColor: Colors.black26,
-            onTap: () {
-              globals.especialidad_seleccionada = especiali.nombre_Especialidad;
-              globals.opcion_menu = 1;
-              Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Menu()));
-              
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.network(
-                  '${especiali.imagen}',
-                  height: 94,
-                  width: 144,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                Text('${especiali.nombre_Especialidad}',
-                    style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 11,
-                        color: Color(0xFF000000),
-                        fontWeight: FontWeight.w700,
-                        height: 27 / 22),
-                    textAlign: TextAlign.center),
-              ],
-            ),
+Widget buildEspecialidadWidget(listaEspecialidades especiali) {
+  return Material(
+    color: Colors.white,
+    elevation: 8,
+    borderRadius: BorderRadius.circular(25.0),
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+    child: InkWell(
+      splashColor: Colors.black26,
+      onTap: () {
+        Navigator.push(
+          context,
+        MaterialPageRoute(
+          builder: (context) => Medicos(especialidad: especiali.nombre_Especialidad),
+        ),
+        );
+
+},
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.network(
+            '${especiali.imagen}',
+            height: 94,
+            width: 144,
+            fit: BoxFit.cover,
           ),
-        ),
-        const SizedBox(
-          width: 20.0,
-        ),
-        Material(
-          color: Colors.white,
-          elevation: 8,
-          borderRadius: BorderRadius.circular(25.0),
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: InkWell(
-            splashColor: Colors.black26,
-            onTap: () {
-              globals.especialidad_seleccionada = especiali.nombre_Especialidad;
-              globals.opcion_menu = 1;
-              Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Menu()));
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.network(
-                  '${especiali.imagen}',
-                  height: 94,
-                  width: 144,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                Text('${especiali.nombre_Especialidad}',
-                    style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 11,
-                        color: Color(0xFF000000),
-                        fontWeight: FontWeight.w700,
-                        height: 27 / 22),
-                    textAlign: TextAlign.center),
-              ],
-            ),
+          const SizedBox(
+            height: 6,
           ),
-        ),
-      ],
-    );
-  }
+          Text('${especiali.nombre_Especialidad}',
+              style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 11,
+                  color: Color(0xFF000000),
+                  fontWeight: FontWeight.w700,
+                  height: 27 / 22),
+              textAlign: TextAlign.center),
+        ],
+      ),
+    ),
+  );
+}
 }

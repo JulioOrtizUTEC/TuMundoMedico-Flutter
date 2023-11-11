@@ -7,7 +7,9 @@ import 'package:tumundomedico_flutter/src/listaMedicos.dart';
 import 'globals.dart' as globals;
 
 class Medicos extends StatefulWidget {
-  const Medicos({Key? key}) : super(key: key);
+  final String especialidad;
+
+  const Medicos({Key? key, required this.especialidad}) : super(key: key);
 
   @override
   State<Medicos> createState() => _Medicos();
@@ -17,18 +19,16 @@ class _Medicos extends State<Medicos> {
   Future<List<listaMedicos>>? doctors;
   final TextEditingController searchController = TextEditingController();
   List<listaMedicos> filteredDoctors = [];
-  List<listaMedicos> doctorList = []; // Define the doctorList at the class level
+  List<listaMedicos> doctorList = [];
 
   @override
   void initState() {
     super.initState();
-    if(globals.especialidad_seleccionada != ""){
-      searchController.text = globals.especialidad_seleccionada;
-      updateSearchResults(searchController.text.toString());
-      globals.especialidad_seleccionada = "";
-    }
+    // Set initial text of searchController
+    searchController.text = widget.especialidad;
+    // Fetch doctors and update search results
     doctors = fetchDoctorData();
-
+    updateSearchResults(searchController.text);
   }
 
   @override
@@ -154,7 +154,8 @@ Widget build(BuildContext context) {
       final matchingDoctors = doctorList.where((doctor) {
         final lowercaseName = doctor.nombres.toLowerCase();
         final lowercaseSpeciality = doctor.especialidad.toLowerCase();
-        return lowercaseName.contains(lowercaseQuery) || lowercaseSpeciality.contains(lowercaseQuery);
+        return lowercaseName.contains(lowercaseQuery) ||
+            lowercaseSpeciality.contains(lowercaseQuery);
       }).toList();
 
       setState(() {
