@@ -6,6 +6,7 @@ import 'package:tumundomedico_flutter/src/menu.dart';
 import 'package:tumundomedico_flutter/src/perfil.dart';
 import 'package:tumundomedico_flutter/src/recuperaContra.dart';
 import 'package:tumundomedico_flutter/src/recuperaContraVerificar.dart';
+import 'src/globals.dart' as globals;
 
 void main() => runApp(MyApp());
 
@@ -38,7 +39,7 @@ class MedicosClass extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Médicos',
-      home: Medicos(especialidad: 'Medico General'),
+      home: Medicos(especialidad: '${globals.nombre_especialidad}'),
     );
   }
 }

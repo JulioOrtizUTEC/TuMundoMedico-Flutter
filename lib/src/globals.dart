@@ -5,4 +5,5 @@ library tumundomedico_flutter.globals;
 String idUser = "";
 String user = "";
 String especialidad_seleccionada = "";
+String nombre_especialidad = "";
 int opcion_menu = 0;

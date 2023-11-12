@@ -200,6 +200,7 @@ Widget buildEspecialidadWidget(listaEspecialidades especiali) {
       splashColor: Colors.black26,
       onTap: () {
         globals.opcion_menu = 1;
+        globals.nombre_especialidad = especiali.nombre_Especialidad;
         Navigator.push(
           context,
         MaterialPageRoute(
