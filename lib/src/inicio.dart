@@ -199,10 +199,11 @@ Widget buildEspecialidadWidget(listaEspecialidades especiali) {
     child: InkWell(
       splashColor: Colors.black26,
       onTap: () {
+        globals.opcion_menu = 1;
         Navigator.push(
           context,
         MaterialPageRoute(
-          builder: (context) => Medicos(especialidad: especiali.nombre_Especialidad),
+          builder: (context) => Menu(),
         ),
         );
 
