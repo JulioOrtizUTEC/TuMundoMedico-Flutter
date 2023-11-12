@@ -38,7 +38,7 @@ class MedicosClass extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Médicos',
-      home: Medicos(),
+      home: Medicos(especialidad: 'Medico General'),
     );
   }
 }

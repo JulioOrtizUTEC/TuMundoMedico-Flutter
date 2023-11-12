@@ -29,7 +29,7 @@ class _MenuState extends State<Menu> {
       case 0:
         return const Inicio();
       case 1:
-        return const Medicos();
+        return const Medicos(especialidad: 'Medico General');
       case 2:
         return const Perfil();
       case 3:
